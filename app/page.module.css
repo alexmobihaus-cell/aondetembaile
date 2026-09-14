@@ -1,0 +1,333 @@
+.hero {
+  position: relative;
+  padding: 9rem 1.5rem 8rem 1.5rem;
+  background-color: #080808;
+  text-align: center;
+  border-bottom: 1px solid rgba(242, 106, 0, 0.3);
+  overflow: hidden;
+  min-height: 94vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+/* Background image with a subtle, premium cinematic zoom */
+.heroBgImage {
+  position: absolute;
+  inset: -4%;
+  background-color: #080808;
+  background-image: url('/img_hero/image.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: brightness(0.35) contrast(1.12) saturate(1.1);
+  animation: heroCinematicZoom 28s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+/* Dark gradient overlay + vignette to preserve legibility */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(6, 6, 6, 0.82) 100%),
+    linear-gradient(to bottom, rgba(6, 6, 6, 0.55) 0%, rgba(6, 6, 6, 0.15) 40%, rgba(6, 6, 6, 0.94) 100%);
+}
+
+/* ---- STATIC AMBIENT NIGHTCLUB LIGHTS (100% BRAND ORANGE & GOLD PALETTE) ---- */
+
+@keyframes heroCinematicZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.clubLights {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.clubLight {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  will-change: opacity, transform;
+}
+
+/* Primary Brand Glow Spotlight */
+.clubLightA {
+  top: -10%;
+  left: 2%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 720px;
+  max-height: 720px;
+  background: radial-gradient(circle, rgba(242, 106, 0, 0.9) 0%, rgba(242, 106, 0, 0.2) 50%, rgba(242, 106, 0, 0) 75%);
+  opacity: 0.34;
+  transform: scale(0.95);
+}
+
+/* Stage Flare Warm Orange Glow */
+.clubLightC {
+  bottom: -12%;
+  left: 26%;
+  width: 58vw;
+  height: 58vw;
+  max-width: 780px;
+  max-height: 780px;
+  background: radial-gradient(circle, rgba(255, 140, 0, 0.8) 0%, rgba(255, 140, 0, 0.15) 50%, rgba(255, 140, 0, 0) 72%);
+  opacity: 0.28;
+  transform: scale(1);
+}
+
+/* Sweeping Brand Spotlight Beam */
+.clubLightE {
+  top: 0%;
+  right: 15%;
+  width: 38vw;
+  height: 75vw;
+  max-width: 480px;
+  max-height: 900px;
+  background: conic-gradient(from 180deg at 50% 0%, rgba(242, 106, 0, 0.9) 0deg, rgba(255, 183, 0, 0.5) 40deg, transparent 95deg);
+  filter: blur(28px);
+  transform-origin: top center;
+  opacity: 0.22;
+  transform: rotate(-20deg) scale(1);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.heroTitle {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.85);
+  animation: cinematicFadeUp 0.9s ease 0.1s both;
+}
+
+.heroTitle .gradient-text,
+.heroTitle :global(.gradient-text) {
+  display: inline-block;
+  filter: drop-shadow(0 0 30px rgba(242, 106, 0, 0.6));
+}
+
+@media (max-width: 640px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  color: var(--color-light-gray);
+  max-width: 680px;
+  margin: 0 auto 3rem auto;
+  line-height: 1.6;
+  font-weight: 400;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.95);
+  animation: cinematicFadeUp 0.9s ease 0.25s both;
+}
+
+/* Search box cinematic entrance */
+.searchBoxAnim {
+  animation: cinematicFadeUp 0.9s ease 0.4s both;
+}
+
+.searchBoxGrid {
+  max-width: 860px;
+  margin: 0 auto;
+  background: rgba(18, 16, 22, 0.85);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(242, 106, 0, 0.45);
+  padding: 0.75rem;
+  border-radius: var(--radius-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(242, 106, 0, 0.25);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.searchBoxGrid:hover,
+.searchBoxGrid:focus-within {
+  border-color: rgba(242, 106, 0, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(242, 106, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .searchBoxGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 82vh;
+    padding: 6.5rem 1.25rem 5.5rem 1.25rem;
+  }
+}
+
+.searchInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: rgba(24, 24, 24, 0.9);
+  border-radius: var(--radius-md);
+  border: 1px solid #333333;
+  transition: border-color 0.2s ease;
+}
+
+.searchInputWrapper:focus-within {
+  border-color: var(--color-orange);
+}
+
+.searchInput {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.searchSelect {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.searchSelect option {
+  background: #1e1e1e;
+  color: #ffffff;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.sectionTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  padding: 0.55rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.filterBtn:hover {
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  background: rgba(242, 106, 0, 0.12);
+}
+
+.filterBtnActive {
+  background: rgba(242, 106, 0, 0.24);
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  box-shadow: 0 0 14px rgba(242, 106, 0, 0.35);
+}
+
+/* Category Filter Bar Container with Hidden Scrollbar & Drag/Wheel Scroll */
+.categoryFilterWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.categoriesScrollContainer {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 0.6rem;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 0.5rem 0.2rem;
+  width: 100%;
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE / Edge */
+}
+
+.categoriesScrollContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+}
+
+.categoriesScrollContainer:active {
+  cursor: grabbing;
+}
+
+.emptyState {
+  background: var(--bg-secondary);
+  border: 1px dashed rgba(242, 106, 0, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}

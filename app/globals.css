@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap');
+
+:root {
+  /* Brand Book Official Color Palette */
+  --color-orange: #F26A00;
+  --color-orange-hover: #e06000;
+  --color-black: #111111;
+  --color-dark-gray: #2E2E2E;
+  --color-medium-gray: #757575;
+  --color-light-gray: #D9D9D9;
+  --color-white: #FFFFFF;
+  
+  --bg-primary: #111111;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #242424;
+  --bg-card-hover: #2e2e2e;
+  --border-color: rgba(242, 106, 0, 0.25);
+  --border-color-hover: rgba(242, 106, 0, 0.6);
+  
+  --accent-gold: #F26A00;
+  --accent-orange: #F26A00;
+  --accent-emerald: #10b981;
+  --accent-red: #ef4444;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #D9D9D9;
+  --text-muted: #757575;
+
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-dark-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-orange);
+}
+
+/* Global Container Utility */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Typography Utilities */
+.gradient-text {
+  color: var(--color-orange);
+  background: linear-gradient(135deg, #F26A00 0%, #ff8c2b 50%, #fde047 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   NIGHTCLUB / CINEMATIC LIGHT SYSTEM  — "Aonde Tem Baile"
+   ============================================================ */
+
+/* Real Nightclub Party Light Animations — 100% Brand Book Official Palette (#F26A00, Gold, White) */
+
+/* Real Nightclub Party Light Animations — 100% Brand Book Official Palette (#F26A00, Gold, White) */
+
+/* Ultra-fast nightclub stroboscope flash */
+@keyframes clubRealStrobe {
+  0%, 100% { opacity: 0.05; transform: scale(0.9); }
+  4%  { opacity: 1;    transform: scale(1.25); filter: blur(15px); }
+  8%  { opacity: 0.1;  transform: scale(0.95); }
+  12% { opacity: 0.95; transform: scale(1.18); filter: blur(20px); }
+  16% { opacity: 0.05; transform: scale(0.9); }
+  38% { opacity: 0.08; transform: scale(0.92); }
+  42% { opacity: 1;    transform: scale(1.3);  filter: blur(12px); }
+  46% { opacity: 0.15; transform: scale(0.95); }
+  70% { opacity: 0.05; transform: scale(0.9); }
+  74% { opacity: 0.95; transform: scale(1.22); filter: blur(18px); }
+  78% { opacity: 0.08; transform: scale(0.94); }
+}
+
+/* Fast sweeping nightclub spotlight beam */
+@keyframes clubSpotlightSweep {
+  0%   { transform: rotate(-45deg) scale(0.9); opacity: 0.25; }
+  25%  { transform: rotate(15deg) scale(1.25); opacity: 0.95; }
+  50%  { transform: rotate(45deg) scale(0.9); opacity: 0.35; }
+  75%  { transform: rotate(-20deg) scale(1.2); opacity: 0.9; }
+  100% { transform: rotate(-45deg) scale(0.9); opacity: 0.25; }
+}
+
+/* Pulsing nightclub stage flare */
+@keyframes clubRealPulse {
+  0%   { opacity: 0.2; transform: scale(0.85); }
+  25%  { opacity: 1;   transform: scale(1.2); }
+  50%  { opacity: 0.25; transform: scale(0.92); }
+  75%  { opacity: 0.95; transform: scale(1.15); }
+  100% { opacity: 0.2; transform: scale(0.85); }
+}
+
+/* Laser sweep animation */
+@keyframes clubLaserSweep {
+  0%   { transform: rotate(-35deg) scaleY(0.8); opacity: 0.2; }
+  50%  { transform: rotate(35deg) scaleY(1.3); opacity: 0.95; }
+  100% { transform: rotate(-35deg) scaleY(0.8); opacity: 0.2; }
+}
+
+/* Slow cinematic background zoom */
+@keyframes heroCinematicZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* Cinematic staggered fade-up entrance */
+@keyframes cinematicFadeUp {
+  from { opacity: 0; transform: translateY(28px); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Button Utilities */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-orange);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 18px rgba(242, 106, 0, 0.4);
+}
+
+.btn-primary:hover {
+  background: var(--color-orange-hover);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(242, 106, 0, 0.6);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-orange);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(242, 106, 0, 0.12);
+  border-color: var(--color-orange);
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #ffffff;
+}
+
+.btn-success {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-success:hover {
+  background: rgba(16, 185, 129, 0.3);
+  color: #ffffff;
+}
+
+/* Card Utility */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Input Fields Utility */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-light-gray);
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: #181818;
+  border: 1px solid #333333;
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 3px rgba(242, 106, 0, 0.2);
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-light-gray);
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--color-orange);
+  cursor: pointer;
+}
+
+/* Badge Component */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-gold {
+  background: rgba(242, 106, 0, 0.15);
+  color: var(--color-orange);
+  border: 1px solid rgba(242, 106, 0, 0.4);
+}
+
+.badge-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--accent-red);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Grid Layouts */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
