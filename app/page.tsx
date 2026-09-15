@@ -14,11 +14,12 @@ interface Category {
   slug: string
 }
 
-const HERO_IMAGES = [  
+const HERO_IMAGES = [
+  '/img_hero/carousel/image.png',
   '/img_hero/carousel/image2.png',
+  '/img_hero/carousel/image3.png',
   '/img_hero/carousel/image4.png',
-  '/img_hero/carousel/image6.png',
-  '/img_hero/carousel/image7.png',
+  '/img_hero/carousel/image5.png',
 ]
 
 const SEARCH_RADIUS_KM = 20
