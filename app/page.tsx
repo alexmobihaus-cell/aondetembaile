@@ -20,6 +20,8 @@ const HERO_IMAGES = [
   '/img_hero/carousel/image3.png',
   '/img_hero/carousel/image4.png',
   '/img_hero/carousel/image5.png',
+  '/img_hero/carousel/image6.png',
+  '/img_hero/carousel/image7.png',
 ]
 
 const SEARCH_RADIUS_KM = 20
