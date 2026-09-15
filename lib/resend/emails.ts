@@ -5,7 +5,7 @@ function getResendClient() {
   return new Resend(apiKey);
 }
 
-const SENDER_EMAIL = 'Aonde Tem Baile <onboarding@resend.dev>';
+const SENDER_EMAIL = 'Aonde Tem Baile <contato@aondetembaile.com.br>';
 const SITE_URL = 'https://aondetembaile.com.br';
 
 /**
