@@ -3,6 +3,8 @@
 import { revalidatePath } from 'next/cache'
 import { geocodeLocation } from '@/lib/geocoding/server'
 import { requireAdmin } from '@/lib/auth/admin'
+import { notifyIndexNowForEvent } from '@/lib/indexnow'
+import { categorySeoPath, citySeoPath } from '@/lib/seo'
 import {
   APIFY_ESTIMATED_COST_PER_ITEM_USD,
   APIFY_FACEBOOK_RESULTS_PER_RUN,
@@ -11,6 +13,7 @@ import {
 } from '@/lib/apify/facebook-posts'
 import { mapFacebookPostsToReviewCandidates } from '@/lib/event-discovery/facebook-posts'
 import { discoverEventsWithBrave } from '@/lib/event-discovery/brave-discovery'
+import { discoverRoleAgoraEvents } from '@/lib/event-discovery/roleagora'
 import {
   getDiscoveryWindow,
   inspectEventUrlWithGroqCompound,
@@ -294,9 +297,27 @@ export async function discoverEventsAction(input: DiscoverEventsInput) {
         monthlyBudgetUsd: number
       }
     | null = null
+  let roleAgoraUsage:
+    | {
+        scanned: number
+        matched: number
+        usedDataEndpoint: boolean
+        usedHtmlEventPages: boolean
+        usedVenueExpansion: boolean
+        directEventLinksFound: number
+        venueLinksFound: number
+        venueEventLinksFound: number
+        eventLinksFound: number
+        buildId: string | null
+        pageUrl: string
+      }
+    | null = null
 
   const facebookRequested = sources.includes('facebook')
-  const braveSources = sources.filter((source) => source !== 'facebook')
+  const roleAgoraRequested = sources.includes('roleagora')
+  const braveSources = sources.filter(
+    (source) => source !== 'facebook' && source !== 'roleagora'
+  )
 
   if (braveSources.length > 0) {
     try {
@@ -315,6 +336,41 @@ export async function discoverEventsAction(input: DiscoverEventsInput) {
       console.error('Erro na descoberta com Brave:', error)
       warnings.push(
         `Web: ${error instanceof Error ? error.message : 'falha inesperada no Brave'}`
+      )
+    }
+  }
+
+  if (roleAgoraRequested) {
+    try {
+      const roleAgoraResult = await discoverRoleAgoraEvents({
+        city,
+        state: state || undefined,
+        periodDays,
+      })
+
+      discovered.push(...roleAgoraResult.events)
+      searched += roleAgoraResult.scanned
+      warnings.push(...roleAgoraResult.warnings)
+      roleAgoraUsage = {
+        scanned: roleAgoraResult.scanned,
+        matched: roleAgoraResult.events.length,
+        usedDataEndpoint: roleAgoraResult.usedDataEndpoint,
+        usedHtmlEventPages: roleAgoraResult.usedHtmlEventPages,
+        usedVenueExpansion: roleAgoraResult.usedVenueExpansion,
+        directEventLinksFound: roleAgoraResult.directEventLinksFound,
+        venueLinksFound: roleAgoraResult.venueLinksFound,
+        venueEventLinksFound: roleAgoraResult.venueEventLinksFound,
+        eventLinksFound: roleAgoraResult.eventLinksFound,
+        buildId: roleAgoraResult.buildId,
+        pageUrl: roleAgoraResult.pageUrl,
+      }
+      completedPipelines += 1
+    } catch (error) {
+      console.error('Erro na descoberta estruturada do Rolê Agora:', error)
+      warnings.push(
+        `Rolê Agora: ${
+          error instanceof Error ? error.message : 'falha inesperada ao ler a agenda'
+        }`
       )
     }
   }
@@ -462,6 +518,7 @@ export async function discoverEventsAction(input: DiscoverEventsInput) {
     warnings,
     window,
     apifyUsage,
+    roleAgoraUsage,
   }
 }
 
@@ -936,7 +993,19 @@ export async function approveDiscoveryCandidateAction(candidateId: string) {
 
   revalidatePath('/admin/dashboard')
   revalidatePath('/')
+  revalidatePath('/eventos')
+  revalidatePath('/sitemap.xml')
   revalidatePath(`/evento/${approvedEvent.id}`)
+
+  if (approvedEvent.city && approvedEvent.state) {
+    revalidatePath(citySeoPath(approvedEvent.city, approvedEvent.state))
+  }
+
+  if (approvedEvent.category_id && approvedEvent.category_name) {
+    revalidatePath(categorySeoPath(approvedEvent.category_name))
+  }
+
+  await notifyIndexNowForEvent(approvedEvent)
 
   return {
     success: true as const,

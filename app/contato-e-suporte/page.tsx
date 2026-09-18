@@ -1,12 +1,33 @@
 import type { Metadata } from 'next'
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/seo'
 import Link from 'next/link'
 import { CheckCircle2, Mail, MessageSquareText } from 'lucide-react'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Contato e Suporte | Aonde Tem Baile',
+  title: 'Contato e Suporte',
   description:
     'Entre em contato com a equipe do Aonde Tem Baile para suporte, dúvidas sobre eventos, cadastro ou moderação.',
+  alternates: {
+    canonical: `${SITE_URL}/contato-e-suporte`,
+  },
+  openGraph: {
+    title: `Contato e Suporte | ${SITE_NAME}`,
+    description:
+      'Fale com a equipe do Aonde Tem Baile sobre eventos, cadastro, moderação ou suporte.',
+    url: `${SITE_URL}/contato-e-suporte`,
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: SITE_NAME,
+    images: [{ url: DEFAULT_OG_IMAGE, alt: 'Contato e Suporte — Aonde Tem Baile' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Contato e Suporte | ${SITE_NAME}`,
+    description:
+      'Fale com a equipe do Aonde Tem Baile sobre eventos, cadastro, moderação ou suporte.',
+    images: [DEFAULT_OG_IMAGE],
+  },
 }
 
 interface ContactPageProps {
@@ -33,7 +54,7 @@ export default async function ContatoSuportePage({
             relacionados ao Aonde Tem Baile.
           </p>
 
-          <div className={styles.contactCard}>
+          {/* <div className={styles.contactCard}>
             <Mail size={20} aria-hidden="true" />
             <div>
               <strong>E-mail</strong>
@@ -41,7 +62,7 @@ export default async function ContatoSuportePage({
                 alexmobihaus@gmail.com
               </a>
             </div>
-          </div>
+          </div> */}
 
           <Link href="/quemsomos" className={styles.aboutLink}>
             Conheça também quem somos
