@@ -288,11 +288,10 @@ export default function EditEventModal({
             {/* Contact & Social Links */}
             <div className={styles.grid2}>
               <div className="form-group">
-                <label className="form-label">WhatsApp para Informações *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="(51) 99999-8888"
+                <label className="form-label">WhatsApp para Informações (Opcional)</label>
+<input
+  type="text"
+  placeholder="(51) 99999-8888"
                   className="form-input"
                   value={formData.whatsapp_info}
                   onChange={(e) => setFormData({ ...formData, whatsapp_info: e.target.value })}
