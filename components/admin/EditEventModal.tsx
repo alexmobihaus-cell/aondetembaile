@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { EventItem } from '@/components/EventCard'
 import { updateEventAction } from '@/app/actions/events'
+import { isoToBrazilLocal } from '@/lib/datetime'
 import { X, Edit3, Save, MapPin, Calendar, Ticket, Tag, Image, Phone, Globe } from 'lucide-react'
 import styles from './EditEventModal.module.css'
 
@@ -20,14 +21,6 @@ interface EditEventModalProps {
   onSaveSuccess: (updatedEvent: EventItem) => void
 }
 
-function toDatetimeLocal(isoStr?: string | null): string {
-  if (!isoStr) return ''
-  const date = new Date(isoStr)
-  if (Number.isNaN(date.getTime())) return ''
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
-}
-
 export default function EditEventModal({
   event,
   categories,
@@ -36,54 +29,54 @@ export default function EditEventModal({
   onClose,
   onSaveSuccess,
 }: EditEventModalProps) {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category_id: '',
-    category_name: '',
-    location_name: '',
-    address: '',
-    city: '',
-    state: 'RS',
-    event_date: '',
-    event_end_date: '',
-    ticket_price: '',
-    whatsapp_info: '',
-    facebook_url: '',
-    instagram_handle: '',
-    image_url: '',
-    status: 'approved' as 'pending' | 'approved' | 'rejected',
-  })
+  if (!isOpen || !event) return null
+
+  return (
+    <EditEventModalContent
+      key={event.id}
+      event={event}
+      categories={categories}
+      isAdminView={isAdminView}
+      onClose={onClose}
+      onSaveSuccess={onSaveSuccess}
+    />
+  )
+}
+
+function EditEventModalContent({
+  event,
+  categories,
+  isAdminView,
+  onClose,
+  onSaveSuccess,
+}: {
+  event: EventItem
+  categories: CategoryOption[]
+  isAdminView: boolean
+  onClose: () => void
+  onSaveSuccess: (updatedEvent: EventItem) => void
+}) {
+  const [formData, setFormData] = useState(() => ({
+    title: event.title || '',
+    description: event.description || '',
+    category_id: event.category_id || '',
+    category_name: event.category_name || '',
+    location_name: event.location_name || '',
+    address: event.address || '',
+    city: event.city || '',
+    state: event.state || 'RS',
+    event_date: isoToBrazilLocal(event.event_date),
+    event_end_date: isoToBrazilLocal(event.event_end_date),
+    ticket_price: event.ticket_price || '',
+    whatsapp_info: event.whatsapp_info || '',
+    facebook_url: event.facebook_url || '',
+    instagram_handle: event.instagram_handle || '',
+    image_url: event.image_url || '',
+    status: (event.status as 'pending' | 'approved' | 'rejected') || 'approved',
+  }))
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (event) {
-      setFormData({
-        title: event.title || '',
-        description: event.description || '',
-        category_id: event.category_id || '',
-        category_name: event.category_name || '',
-        location_name: event.location_name || '',
-        address: event.address || '',
-        city: event.city || '',
-        state: event.state || 'RS',
-        event_date: toDatetimeLocal(event.event_date),
-        event_end_date: toDatetimeLocal(event.event_end_date),
-        ticket_price: event.ticket_price || '',
-        whatsapp_info: event.whatsapp_info || '',
-        facebook_url: event.facebook_url || '',
-        instagram_handle: event.instagram_handle || '',
-        image_url: event.image_url || '',
-        status: (event.status as any) || 'approved',
-      })
-      setError(null)
-    }
-  }, [event])
-
-  if (!isOpen || !event) return null
-
   const handleCategoryChange = (catId: string) => {
     const selectedCat = categories.find((c) => c.id === catId)
     setFormData({
@@ -107,10 +100,8 @@ export default function EditEventModal({
       address: formData.address,
       city: formData.city,
       state: formData.state,
-      event_date: new Date(formData.event_date).toISOString(),
-      event_end_date: formData.event_end_date
-        ? new Date(formData.event_end_date).toISOString()
-        : undefined,
+      event_date: formData.event_date,
+      event_end_date: formData.event_end_date || undefined,
       ticket_price: formData.ticket_price,
       whatsapp_info: formData.whatsapp_info,
       facebook_url: formData.facebook_url,
@@ -137,7 +128,7 @@ export default function EditEventModal({
         <div className={styles.header}>
           <div className={styles.headerTitle}>
             <Edit3 size={20} color="#f26a00" />
-            <span>Editar Evento <span>"{event.title}"</span></span>
+            <span>Editar Evento <span>&quot;{event.title}&quot;</span></span>
           </div>
 
           <button onClick={onClose} className={styles.closeBtn} aria-label="Fechar">
