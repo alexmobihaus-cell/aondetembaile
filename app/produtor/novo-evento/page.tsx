@@ -284,6 +284,7 @@ export default function NewEventPage() {
             <label className="form-label">WhatsApp para Mais Informações *</label>
             <input
               type="text"
+              required
               placeholder="Ex: (51) 99999-8888"
               className="form-input"
               value={formData.whatsapp_info}

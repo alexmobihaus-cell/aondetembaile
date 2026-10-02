@@ -156,7 +156,7 @@ export async function updateEventAction(
     event_date: string
     event_end_date?: string
     ticket_price?: string
-    whatsapp_info?: string
+    whatsapp_info: string
     facebook_url?: string
     instagram_handle?: string
     status?: 'pending' | 'approved' | 'rejected'
