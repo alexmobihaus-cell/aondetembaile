@@ -1,6 +1,7 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
+import Script from 'next/script'
 import type { Metadata } from 'next'
 import {
   DEFAULT_LOGO,
@@ -123,6 +124,19 @@ export default function RootLayout({
         <Navbar />
         <main style={{ flex: 1, minHeight: 'calc(100vh - 70px)' }}>{children}</main>
         <Footer />
+        <Script
+          id="google-analytics-loader"
+          src="https://www.googletagmanager.com/gtag/js?id=G-DLPF26J2F1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DLPF26J2F1');
+          `}
+        </Script>
       </body>
     </html>
   )
